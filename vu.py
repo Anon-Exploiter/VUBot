@@ -2,7 +2,6 @@ from discord.ext import commands
 from time import sleep
 
 import requests
-import inspect
 import json
 import datetime, pytz
 import discord
