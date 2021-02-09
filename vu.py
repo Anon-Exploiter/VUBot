@@ -67,7 +67,7 @@ def fetchGDB(gdbEndpoint, accessToken):
             enDate  = datetime.datetime.fromtimestamp(eDate).strftime('%d-%m-%Y')
             dToday  = datetime.datetime.now(pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
 
-            fOutput += f"[#] Course: {crs}\nStart Date: {stDate}\nEnd Date: {enDate}\n"
+            fOutput += f"[#] Course: {crs}\nStart Date: {stDate}\nEnd Date: {enDate}\n\n"
 
         print(fOutput)
         return(fOutput)
@@ -130,7 +130,7 @@ def main():
         quizzes         = fetchQuizzes(quizEndpoint, token)
 
         requests.post(webHookURL, {
-            "content": f"[#] GDBs: \n\n{gdbs}\n--\n\n[#] Quizzes: \n\n{quizzes}"
+            "content": f"[#] GDBs: \n\n{gdbs}--\n\n[#] Quizzes: \n\n{quizzes}"
         })
 
         sleep(21600)
