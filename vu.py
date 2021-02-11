@@ -130,7 +130,7 @@ def main():
         quizzes         = fetchQuizzes(quizEndpoint, token)
 
         requests.post(webHookURL, {
-            "content": f"[#] GDBs: \n\n{gdbs}--\n\n[#] Quizzes: \n\n{quizzes}"
+            "content": f"[&] GDBs: \n\n{gdbs}--\n\n[&] Quizzes: \n\n{quizzes}"
         })
 
         sleep(21600)
