@@ -67,6 +67,12 @@ def fetchGDB(gdbEndpoint, accessToken):
             enDate  = datetime.datetime.fromtimestamp(eDate).strftime('%d-%m-%Y')
             dToday  = datetime.datetime.now(pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
 
+            if stDate == dToday:
+                stDate += " (today)"
+
+            if enDate == dToday:
+                enDate += " (today)"
+
             fOutput += f"[#] Course: {crs}\nStart Date: {stDate}\nEnd Date: {enDate}\n\n"
 
         print(fOutput)
@@ -105,6 +111,12 @@ def fetchQuizzes(quizEndpoint, accessToken):
             enDate  = datetime.datetime.fromtimestamp(eDate).strftime('%d-%m-%Y')
             dToday  = datetime.datetime.now(pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
 
+            if stDate == dToday:
+                stDate += " (today)"
+
+            if enDate == dToday:
+                enDate += " (today)"
+
             fOutput += f"[#] Course: {crs}\nTitle: {title}\nStart Date: {stDate}\nEnd Date: {enDate}\n\n"
 
         print(fOutput)
@@ -114,8 +126,8 @@ def fetchQuizzes(quizEndpoint, accessToken):
         print("[!] Can't load GDB endpoint..")
 
 def main():
-    username        = "bcXXX"       # VU User's ID
-    password        = "XXXXX"       # VU User's Password
+    username        = "bcXXXXXX"       # VU User's ID
+    password        = "XXXXXXXX"       # VU User's Password
 
     loginEndpoint   = "https://ws.vu.edu.pk/MobileApp/Student.asmx/GetStudent"
     gdbEndpoint     = "https://ws.vu.edu.pk/MobileApp/GradedActivitiesToDo.asmx/getGDB"
@@ -131,7 +143,7 @@ def main():
 
         requests.post(webHookURL, {
             "content": f"[&] GDBs: \n\n{gdbs}--\n\n[&] Quizzes: \n\n{quizzes}"
-        }) 
+        })
 
         sleep(21600)
 
