@@ -38,7 +38,8 @@ After doing so, upload the script on Heroku, requirements, Procfile, and runtime
 - Posting of assignments (since I don't have any assignment in portal can't parse that rn, DM me your creds if you want, I'll implement that as well)
 
 ### Changelog
-| Changes                                                                                                   | Release                                             |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Initial release containing VU Bot which lets one get discord post of Quizzes and Assignments              | 0.1 - 09-02-2021                                    |
+| Changes                                                                                                   | Release                                             
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------- 
+| Implements [#1](https://github.com/Anon-Exploiter/VUBot/issues/1), [#2](https://github.com/Anon-Exploiter/VUBot/issues/2), and [#3](https://github.com/Anon-Exploiter/VUBot/issues/3) -- Minor enhancements                                                           | 0.2 - 11-02-2021                                    
+| Initial release containing VU Bot which lets one get discord post of Quizzes and Assignments              | 0.1 - 09-02-2021                                    
 
