@@ -145,7 +145,7 @@ def main():
             "content": f"[&] GDBs: \n\n{gdbs}--\n\n[&] Quizzes: \n\n{quizzes}"
         })
 
-        sleep(21600)
+        sleep(21600)    # 6 Hours of time -- to post updates
 
 if __name__ == '__main__':
     main()
