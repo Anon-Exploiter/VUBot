@@ -30,9 +30,9 @@ After doing so, upload the script on Heroku, requirements, Procfile, and runtime
 
 ### Output
 
-<img src="https://i.imgur.com/i9rNq9F.png">
+<img src="https://i.imgur.com/AKfRaDJ.png">
 
-<img src="https://i.imgur.com/HNeS2m2.png">
+<img src="https://i.imgur.com/HdwlM6t.png">
 
 ### To-implement
 - Posting of assignments (since I don't have any assignment in portal can't parse that rn, DM me your creds if you want, I'll implement that as well)
