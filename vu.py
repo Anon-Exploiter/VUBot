@@ -63,8 +63,8 @@ def fetchGDB(gdbEndpoint, accessToken):
             sDate   = int(gdbs['StartDate'].replace('/Date(', '').replace(')/', '')[:-3])
             eDate   = int(gdbs['EndDate'].replace('/Date(', '').replace(')/', '')[:-3])
 
-            stDate  = datetime.datetime.fromtimestamp(sDate).strftime('%d-%m-%Y')
-            enDate  = datetime.datetime.fromtimestamp(eDate).strftime('%d-%m-%Y')
+            stDate  = datetime.datetime.fromtimestamp(sDate, pytz.timezone('Asia/Karachi')).strftime('%d-%m-%Y')
+            enDate  = datetime.datetime.fromtimestamp(eDate, pytz.timezone('Asia/Karachi')).strftime('%d-%m-%Y')
             dToday  = datetime.datetime.now(pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
 
             if stDate == dToday:
@@ -107,8 +107,8 @@ def fetchQuizzes(quizEndpoint, accessToken):
             sDate   = int(quizzes['StartDate'].replace('/Date(', '').replace(')/', '')[:-3])
             eDate   = int(quizzes['EndDate'].replace('/Date(', '').replace(')/', '')[:-3])
 
-            stDate  = datetime.datetime.fromtimestamp(sDate).strftime('%d-%m-%Y')
-            enDate  = datetime.datetime.fromtimestamp(eDate).strftime('%d-%m-%Y')
+            stDate  = datetime.datetime.fromtimestamp(sDate, pytz.timezone('Asia/Karachi')).strftime('%d-%m-%Y')
+            enDate  = datetime.datetime.fromtimestamp(eDate, pytz.timezone('Asia/Karachi')).strftime('%d-%m-%Y')
             dToday  = datetime.datetime.now(pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
 
             if stDate == dToday:
