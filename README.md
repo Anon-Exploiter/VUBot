@@ -40,6 +40,7 @@ After doing so, upload the script on Heroku, requirements, Procfile, and runtime
 ### Changelog
 | Changes                                                                                                   | Release                                             
 | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------- 
+| [Major bug fix] Fixes time issue while execution in Heroku server | 0.3 - 13-02-2021
 | Implements [#1](https://github.com/Anon-Exploiter/VUBot/issues/1), [#2](https://github.com/Anon-Exploiter/VUBot/issues/2), and [#3](https://github.com/Anon-Exploiter/VUBot/issues/3) -- Minor enhancements                                                           | 0.2 - 11-02-2021                                    
 | Initial release containing VU Bot which lets one get discord post of Quizzes and Assignments              | 0.1 - 09-02-2021                                    
 
