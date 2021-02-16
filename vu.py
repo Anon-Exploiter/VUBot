@@ -68,10 +68,10 @@ def fetchGDB(gdbEndpoint, accessToken):
             dToday  = datetime.datetime.now(pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
 
             if stDate == dToday:
-                stDate += " (today)"
+                stDate += " **(today)**"
 
             if enDate == dToday:
-                enDate += " (today)"
+                enDate += " __**(today)**__"
 
             fOutput += f"[#] Course: {crs}\nStart Date: {stDate}\nEnd Date: {enDate}\n\n"
 
@@ -112,10 +112,10 @@ def fetchQuizzes(quizEndpoint, accessToken):
             dToday  = datetime.datetime.now(pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
 
             if stDate == dToday:
-                stDate += " (today)"
+                stDate += " **(today)**"
 
             if enDate == dToday:
-                enDate += " (today)"
+                enDate += " __**(today)**__"
 
             fOutput += f"[#] Course: {crs}\nTitle: {title}\nStart Date: {stDate}\nEnd Date: {enDate}\n\n"
 
