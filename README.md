@@ -13,18 +13,7 @@ The script keeps running in a `while True` loop and prints the assigned stuff ev
 ### How to use?
 Add user's credentials and WebHook URL of Discord server in the `main()` function of the script. 
 
-```python3
-def main():
-    username        = "bcXXX"       # VU User's ID
-    password        = "XXXXX"       # VU User's Password
-
-    loginEndpoint   = "https://ws.vu.edu.pk/MobileApp/Student.asmx/GetStudent"
-    gdbEndpoint     = "https://ws.vu.edu.pk/MobileApp/GradedActivitiesToDo.asmx/getGDB"
-    quizEndpoint    = "https://ws.vu.edu.pk/MobileApp/GradedActivitiesToDo.asmx/getQuizzes"
-    assignEndpoint  = "https://ws.vu.edu.pk/MobileApp/GradedActivitiesToDo.asmx/getAssignments"
-
-    webHookURL      = "https://discord.com/api/webhooks/XXX/XXX"
-```
+<img src="https://i.imgur.com/kB4cdyi.png">
 
 After doing so, upload the script on Heroku, requirements, Procfile, and runtime.txt has already been added. You can either run the script on some other EC2 instance (which constantly runs) or on Heroku and configure Dyno to constantly run. 
 
