@@ -2,9 +2,9 @@
 A script to post `Quizzes`, `GDBs`, and `Assignments` in Discord channel via WebHooks to alert the assignee. 
 
 ### Features
-- Fetching Student's assigned GDBs, Quizzes and Assignments
-- From (v1.2), we get any pending challans' as well! 😄
-- Posting all that stuff in a Discord channel
+- Fetching Student's assigned `GDBs`, `Quizzes` and `Assignments`
+- From (v1.2), we get any **pending challans'** as well! 😄
+- Posting all that stuff in a `Discord channel`
 
 ### How it works?
 The script utilizies `Web Applications` source from VULMS. First it authenticates the user with his `studentId` and `studentPassword` and then creates and maintains a `session`. Utilizing that `session`, it accesses the **ActivityCalendar.aspx** file and gets the `JSON` containing the all data related to assigned stuff.
