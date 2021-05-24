@@ -1,12 +1,13 @@
 from bs4 import BeautifulSoup
+from time import sleep
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 import requests
-import urllib3
 import datetime, pytz
 import json
 import re
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def fixAndReturnDates(start, end):
     start       = datetime.datetime.strptime("-".join(start.split(",")[::-1]), '%d-%m-%Y').strftime("%d-%m-%Y")
@@ -116,6 +117,10 @@ def fetchCalendarAndDetails(session):
             end         = subjects['end']
 
             startDate, endDate, dateToday   = fixAndReturnDates(start, end)
+            # print(endDate, dateToday)
+            
+            subtDate    = int(str(datetime.datetime.strptime(endDate, "%d-%m-%Y") - datetime.datetime.strptime(dateToday, "%d-%m-%Y")).split(" ")[0])
+            print(subtDate)
 
             if startDate == dateToday:
                 startDate += " **(today)**"
@@ -123,9 +128,14 @@ def fetchCalendarAndDetails(session):
             if endDate == dateToday:
                 endDate   += " __**(today)**__"  
 
-            post        += f"[#] **{title}**\n"
-            post        += f"Start date: {startDate}\n"
-            post        += f"End date: {endDate}\n\n"
+            if subtDate == -1:
+                post        += f"[#] **{title}**\n"
+                post        += f"Start date: {startDate}\n"
+
+            if subtDate > 0:
+                post        += f"[#] **{title}** (_**{subtDate}** days left_)\n"
+                post        += f"Start date: {startDate}\n"
+                post        += f"End date: {endDate}\n\n"
 
         print(post)
         return(post)
@@ -151,12 +161,14 @@ def main():
     password    = configContents['password']
     webHookURL  = configContents['discordWebHookURL']
 
-    print("[&] Logging into the Web application...\n")
+    while True:
+        print("[&] Logging into the Web application...\n")
 
-    session     = loginIntoWebApplication(studentId, password)
-    post        = fetchCalendarAndDetails(session)
+        session     = loginIntoWebApplication(studentId, password)
+        post        = fetchCalendarAndDetails(session)
 
-    postIntoDiscord(post, webHookURL)
+        postIntoDiscord(post, webHookURL)
+        sleep(21600)    # 6 Hours of time -- to post updates
 
 if __name__ == '__main__':
     main()
