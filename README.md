@@ -18,7 +18,7 @@ After doing so, upload the script on **Heroku**, `requirements`, `Procfile`, and
 
 ### Output
 
-<img src="https://i.imgur.com/bLMvcOJ.png">
+<img src="https://i.imgur.com/9TVTlgn.png">
 
 <img src="https://i.imgur.com/R6nl3G1.png">
 
