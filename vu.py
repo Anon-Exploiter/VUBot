@@ -133,10 +133,6 @@ def fetchCalendarAndDetails(session):
             if endDate == dateToday:
                 endDate   += " __**(today)**__"  
 
-            if subtDate == -1:
-                post        += f"[#] **{title}**\n"
-                post        += f"Start date: {startDate}\n"
-
             if subtDate > 0:
                 if subtDate == 1:
                     post        += f"[#] **{title}** (_**{subtDate}** day left_)\n"
