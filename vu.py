@@ -12,18 +12,19 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def fixAndReturnDates(start, end):
-    start = datetime.datetime.strptime("-".join(
-        start.split(",")[::-1]), '%d-%m-%Y').strftime("%d-%m-%Y")
-
-    end = (datetime.datetime.strptime("-".join(
-        end.split(",")[::-1]), '%d-%m-%Y') -
-        datetime.timedelta(days=1)).strftime("%d-%m-%Y")
-
-    dateToday = datetime.datetime.now(
-        pytz.timezone('Asia/Karachi')).strftime("%d-%m-%Y")
+    start = datetime.datetime.strptime(
+        "-".join(start.split(",")[::-1]), "%d-%m-%Y"
+    ).strftime("%d-%m-%Y")
+    end = (
+        datetime.datetime.strptime("-".join(end.split(",")[::-1]), "%d-%m-%Y")
+        - datetime.timedelta(days=1)
+    ).strftime("%d-%m-%Y")
+    dateToday = datetime.datetime.now(pytz.timezone("Asia/Karachi")).strftime(
+        "%d-%m-%Y"
+    )
 
     # print(start, end, dateToday)
-    return(start, end, dateToday)
+    return (start, end, dateToday)
 
 
 def returnRequestDetailsOnFailure(url, customString, requestObj):
@@ -48,10 +49,10 @@ def loginIntoWebApplication(studentId, password):
     )
 
     if getLoginParameters.status_code == 200:
-        soup = BeautifulSoup(getLoginParameters.text, 'html.parser')
-        viewstate = soup.find_all('input', {'id': '__VIEWSTATE'})[0]['value']
-        eventvalid = soup.find_all('input', {'id': '__EVENTVALIDATION'})
-        / [0]['value']
+        soup = BeautifulSoup(getLoginParameters.text, "html.parser")
+        viewstate = soup.find_all("input", {"id": "__VIEWSTATE"})[0]["value"]
+        eventvalid = soup.find_all(
+            "input", {"id": "__EVENTVALIDATION"})[0]["value"]
 
         # Login form won't work without these params
 
@@ -73,25 +74,26 @@ def loginIntoWebApplication(studentId, password):
                 "txtStudentID": studentId,
                 "txtPassword": password,
                 "cbKeepMeLogin": "on",
-                "ibtnLogin": "Sign In"
-            }
+                "ibtnLogin": "Sign In",
+            },
         )
 
         if login.status_code == 200:
             cookies = dict(login.cookies)
 
-            if 'stdUserName' in cookies:
+            if "stdUserName" in cookies:
                 print(f"\n[#] User ({cookies['stdUserName']}) logged in!")
 
                 # Need to give /Home.aspx a hit with some token without that,
                 # the cookies don't work lol! (found after hella debuggin)
-                locHref = re.findall(
-                    / r'window\.top\.location\.',
-                    / r'href=\'Home\.aspx\?id\=(.*?)\'\;' login.text)[0]
+                locationHref = re.findall(
+                    r"window\.top\.location\.href=\'Home\.aspx\?id\=(.*?)\'\;",
+                    login.text,
+                )[0]
 
-                homePath = f'https://vulms.vu.edu.pk/Home.aspx?id={locHref}'
+                homPTH = f"https://vulms.vu.edu.pk/Home.aspx?id={locationHref}"
                 session.get(
-                    homePath,
+                    homPTH,
                     # proxies = {
                     #     'http': '127.0.0.1:8080',
                     #     'https': '127.0.0.1:8080',
@@ -99,25 +101,26 @@ def loginIntoWebApplication(studentId, password):
                     verify=False,
                 )
 
-                return(session)
+                return session
 
         else:
             returnRequestDetailsOnFailure(
                 url=loginURL,
                 customString="There was an error trying to fetch params",
-                requestObj=getLoginParameters
+                requestObj=getLoginParameters,
             )
 
     else:
         returnRequestDetailsOnFailure(
             url=loginURL,
             customString="There was an error trying to login",
-            requestObj=login
+            requestObj=login,
         )
 
 
 def fetchCalendarAndDetails(session):
-    cURL = 'https://vulms.vu.edu.pk/ActivityCalendar/ActivityCalendar.aspx'
+    cURL = "https://vulms.vu.edu.pk/ActivityCalendar/"
+    "ActivityCalendar.aspx"
     request = session.get(
         cURL,
         # proxies = {
@@ -130,25 +133,25 @@ def fetchCalendarAndDetails(session):
     if request.status_code == 200:
         post = ""
         source = request.text
-        jsonData = re.findall(r'var\sJsonData\s\=\s(.*?)\;', source)[0]
+        jsonData = re.findall(r"var\sJsonData\s\=\s(.*?)\;", source)[0]
 
         calendarJSON = json.loads(jsonData)
         print(json.dumps(calendarJSON, indent=4))
         print()
 
         for subjects in calendarJSON:
-            coursecode = subjects['coursecode']
-            title = subjects['title']
-            url = subjects['url']
-            start = subjects['start']
-            end = subjects['end']
+            coursecode = subjects["coursecode"]
+            title = subjects["title"]
+            url = subjects["url"]
+            start = subjects["start"]
+            end = subjects["end"]
 
             startDate, endDate, dateToday = fixAndReturnDates(start, end)
             # print(endDate, dateToday)
 
-            subtDate = datetime.datetime.strptime(endDate, "%d-%m-%Y") -
-            / datetime.datetime.strptime(dateToday, "%d-%m-%Y")
-
+            subtDate = datetime.datetime.strptime(
+                endDate, "%d-%m-%Y"
+            ) - datetime.datetime.strptime(dateToday, "%d-%m-%Y")
             subtDate = str(subtDate).split(" ")[0]
 
             if "0:00:00" in subtDate:
@@ -173,20 +176,18 @@ def fetchCalendarAndDetails(session):
                 post += f"End date: {endDate}\n\n"
 
         print(post)
-        return(post)
+        return post
 
     else:
         returnRequestDetailsOnFailure(
             url=calendarURL,
             customString="There was an error trying to fetch calendar",
-            requestObj=request
+            requestObj=request,
         )
 
 
 def postIntoDiscord(post, webHookURL):
-    discordPost = requests.post(webHookURL, {
-        "content": post
-    })
+    discordPost = requests.post(webHookURL, {"content": post})
 
     if discordPost.status_code == 204:
         print("[#] Posted in discord!")
@@ -195,17 +196,17 @@ def postIntoDiscord(post, webHookURL):
         returnRequestDetailsOnFailure(
             url=webHookURL[:10],
             customString="There was an error trying to post on webhook",
-            requestObj=discordPost
+            requestObj=discordPost,
         )
 
 
 def main():
-    with open('config.json', 'r') as f:
+    with open("config.json", "r") as f:
         configContents = json.loads(f.read().strip())
 
-    studentId = configContents['studentId']
-    password = configContents['password']
-    webHookURL = configContents['discordWebHookURL']
+    studentId = configContents["studentId"]
+    password = configContents["password"]
+    webHookURL = configContents["discordWebHookURL"]
 
     while True:
         print("[&] Logging into the Web application...\n")
@@ -214,8 +215,8 @@ def main():
         post = fetchCalendarAndDetails(session)
 
         postIntoDiscord(post, webHookURL)
-        sleep(21600)    # 6 Hours of time -- to post updates
+        sleep(21600)  # 6 Hours of time -- to post updates
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
