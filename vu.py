@@ -119,7 +119,7 @@ def fetchCalendarAndDetails(session):
                 end         = subjects['end']
 
                 startDate, endDate, dateToday   = fixAndReturnDates(start, end)
-                # print(endDate, dateToday)
+                # print(title, startDate, endDate, dateToday, subtDate)
                 
                 subtDate    = datetime.datetime.strptime(endDate, "%d-%m-%Y") - datetime.datetime.strptime(dateToday, "%d-%m-%Y")
                 subtDate    = str(subtDate).split(" ")[0]
@@ -134,6 +134,14 @@ def fetchCalendarAndDetails(session):
 
                 if endDate == dateToday:
                     endDate   += " __**(today)**__"  
+
+                if subtDate == -1:
+                    if startDate != endDate:
+                        post        += f"[#] **{title}**\n"
+                        post        += f"Start date: {startDate}\n"
+                            
+                        if startDate < endDate:
+                            post        += f"End date: {endDate}\n\n"
 
                 if subtDate > 0:
                     if subtDate == 1:
