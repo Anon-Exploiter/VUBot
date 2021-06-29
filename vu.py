@@ -1,6 +1,9 @@
+#!/usr/bin/python3
+
 from bs4 import BeautifulSoup
 from time import sleep
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from sys import argv
 
 import requests
 import datetime, pytz
@@ -174,11 +177,9 @@ def postIntoDiscord(post, webHookURL):
         returnRequestDetailsOnFailure(url = webHookURL[:31], customString = "There was an error trying to post on webhook", requestObj = discordPost)
 
 def main():
-    with open('config.json', 'r') as f: configContents = json.loads(f.read().strip())
-
-    studentId   = configContents['studentId']
-    password    = configContents['password']
-    webHookURL  = configContents['discordWebHookURL']
+    studentId   = argv[1]
+    password    = argv[2]
+    webHookURL  = argv[3]
 
     print("[&] Logging into the Web application...\n")
 
