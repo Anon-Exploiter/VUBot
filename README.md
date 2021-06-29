@@ -12,6 +12,11 @@ The script utilizies `Web Applications` source from VULMS. First it authenticate
 ### How to use?
 Add `user's credentials` and `WebHook URL` of the Discord channel in the [config.json](https://github.com/Anon-Exploiter/VUBot/blob/main/config.json) file (it already has test data in it -- just populate it)
 
+With docker:
+```bash
+docker run uexpl0it/vubot:0.1 username pswd webhookURL
+```
+
 <img src="https://i.imgur.com/E2a6DuM.png">
 
 After doing so, upload the script on **Heroku**, `requirements`, `Procfile`, and `runtime.txt` has already been added. You can either run the script on some other `EC2 instance` (which constantly runs) or on Heroku and configure Dyno to constantly run (recommended and free way). 
