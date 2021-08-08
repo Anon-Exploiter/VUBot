@@ -39,6 +39,14 @@ def fixAndReturnDates(start, end):
 
 
 def returnRequestDetailsOnFailure(url, customString, requestObj):
+    """For debugging request/response being sent/recieved from the
+    VU application.
+
+    Args:
+        url ([str]): URL the request sent to
+        customString ([str]): Indicating where it's happening
+        requestObj ([object]): request object containing all methods
+    """
     string = f"\n[!] {customString}: {url}\n"
     string += f"[!] Status Code: {requestObj.status_code}\n"
     string += f"[!] Response Headers: {requestObj.headers.items()}\n"
