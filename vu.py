@@ -55,6 +55,16 @@ def returnRequestDetailsOnFailure(url, customString, requestObj):
 
 
 def loginIntoWebApplication(studentId, password):
+    """Login into the application and return the sesion to use for
+    further requests
+
+    Args:
+        studentId ([str]): Username/VU ID
+        password ([str]): Login password
+
+    Returns:
+        [object]: Requests' Session object
+    """
     loginURL = "https://vulms.vu.edu.pk:443/LMS_LP.aspx"
 
     session = requests.session()
@@ -140,6 +150,14 @@ def loginIntoWebApplication(studentId, password):
 
 
 def fetchCalendarAndDetails(session):
+    """Fetches the Calendar for all the tasks assigned
+
+    Args:
+        session ([object]): Requests session to do further requests
+
+    Returns:
+        [str]: Returns the Discord post
+    """
     calendarURL = (
         "https://vulms.vu.edu.pk/ActivityCalendar/ActivityCalendar.aspx"
     )
@@ -226,6 +244,12 @@ def fetchCalendarAndDetails(session):
 
 
 def postIntoDiscord(post, webHookURL):
+    """Posts the given string into discord channel through webhook
+
+    Args:
+        post ([str]): Summary/Data to post
+        webHookURL ([str]): Webhook URL of discord channel
+    """
     discordPost = requests.post(webHookURL, {"content": post})
 
     if discordPost.status_code == 204:
