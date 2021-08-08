@@ -14,6 +14,15 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def fixAndReturnDates(start, end):
+    """Since the script runs on Gitlab - Time is in different time zone
+    causing the script to provide wrong alerts or wrong dates/times.
+
+    This function converts the time in Asia/Karachi timezone.
+
+    Args:
+        start ([str]): Starting date of the assigned task
+        end ([str]): Ending date of the assigned task
+    """
     start = datetime.datetime.strptime(
         "-".join(start.split(",")[::-1]), "%d-%m-%Y"
     ).strftime("%d-%m-%Y")
