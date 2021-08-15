@@ -3,8 +3,8 @@ name: Run every 3 hours and post assigned tasks in Discord
 on:
     push:
         branches: [main, docker]
-        # schedule:
-        #     - cron: "* */5 * * *"
+    schedule:
+        - cron: "* */5 * * *"
 
 jobs:
     post:
