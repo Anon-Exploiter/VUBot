@@ -85,8 +85,8 @@ def loginIntoWebApplication(studentId, password):
 
         # Login form won't work without these params
 
-        print(f"[%] __VIEWSTATE: {viewstate}")
-        print(f"[%] __EVENTVALIDATION: {eventvalid}")
+        # print(f"[%] __VIEWSTATE: {viewstate}")
+        # print(f"[%] __EVENTVALIDATION: {eventvalid}")
 
         # Loggin in with the viewstate and eventvalidation parameters.
 
@@ -111,7 +111,7 @@ def loginIntoWebApplication(studentId, password):
             cookies = dict(login.cookies)
 
             if "stdUserName" in cookies:
-                print(f"\n[#] User ({cookies['stdUserName']}) logged in!")
+                # print(f"\n[#] User ({cookies['stdUserName']}) logged in!")
 
                 # Need to give /Home.aspx a hit with some token without that, the cookies don't work lol! (found after hella debuggin)
                 locationHref = re.findall(
