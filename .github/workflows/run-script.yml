@@ -1,4 +1,4 @@
-name: Run every 3 hours and post assigned tasks in Discord
+name: Run every 5 hours and post assigned tasks in Discord
 
 on:
     push:
