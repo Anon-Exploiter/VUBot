@@ -1,10 +1,11 @@
+#!/usr/bin/python3
+
 from bs4 import BeautifulSoup
 from time import sleep
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 import requests
-import datetime
-import pytz
+import datetime, pytz
 import json
 import re
 
@@ -12,6 +13,15 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def fixAndReturnDates(start, end):
+    """Since the script runs on Gitlab - Time is in different time zone
+    causing the script to provide wrong alerts or wrong dates/times.
+
+    This function converts the time in Asia/Karachi timezone.
+
+    Args:
+        start ([str]): Starting date of the assigned task
+        end ([str]): Ending date of the assigned task
+    """
     start = datetime.datetime.strptime(
         "-".join(start.split(",")[::-1]), "%d-%m-%Y"
     ).strftime("%d-%m-%Y")
@@ -28,6 +38,14 @@ def fixAndReturnDates(start, end):
 
 
 def returnRequestDetailsOnFailure(url, customString, requestObj):
+    """For debugging request/response being sent/recieved from the
+    VU application.
+
+    Args:
+        url ([str]): URL the request sent to
+        customString ([str]): Indicating where it's happening
+        requestObj ([object]): request object containing all methods
+    """
     string = f"\n[!] {customString}: {url}\n"
     string += f"[!] Status Code: {requestObj.status_code}\n"
     string += f"[!] Response Headers: {requestObj.headers.items()}\n"
@@ -36,6 +54,16 @@ def returnRequestDetailsOnFailure(url, customString, requestObj):
 
 
 def loginIntoWebApplication(studentId, password):
+    """Login into the application and return the sesion to use for
+    further requests
+
+    Args:
+        studentId ([str]): Username/VU ID
+        password ([str]): Login password
+
+    Returns:
+        [object]: Requests' Session object
+    """
     loginURL = "https://vulms.vu.edu.pk:443/LMS_LP.aspx"
 
     session = requests.session()
@@ -121,6 +149,14 @@ def loginIntoWebApplication(studentId, password):
 
 
 def fetchCalendarAndDetails(session):
+    """Fetches the Calendar for all the tasks assigned
+
+    Args:
+        session ([object]): Requests session to do further requests
+
+    Returns:
+        [str]: Returns the Discord post
+    """
     calendarURL = (
         "https://vulms.vu.edu.pk/ActivityCalendar/ActivityCalendar.aspx"
     )
@@ -207,6 +243,12 @@ def fetchCalendarAndDetails(session):
 
 
 def postIntoDiscord(post, webHookURL):
+    """Posts the given string into discord channel through webhook
+
+    Args:
+        post ([str]): Summary/Data to post
+        webHookURL ([str]): Webhook URL of discord channel
+    """
     discordPost = requests.post(webHookURL, {"content": post})
 
     if discordPost.status_code == 204:
