@@ -9,7 +9,6 @@ on:
 jobs:
     post:
         runs-on: ubuntu-latest
-
         steps:
             - name: Check out source code
               uses: actions/checkout@v2
@@ -22,16 +21,17 @@ jobs:
             - name: Install dependencies
               run: |
                   python -m pip install --upgrade pip
-                  pip install flake8 pytest
+                  pip install flake8 pylint
                   if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
             - name: Lint with flake8 (stop the build if there are Python syntax errors or undefined names)
-              run: |
-                  flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+              run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
             - name: Lint with flake8 (exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide)
-              run: |
-                  flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+              run: flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+            - name: Run pylint on the source code (and return 0 even if there are issues)
+              run: pylint vu.py --exit-zero
 
             - name: Setup config.json file from secrets
               run: echo $CREDS_FILE | base64 -d > config.json
@@ -39,5 +39,4 @@ jobs:
                   CREDS_FILE: ${{secrets.CREDS_FILE}}
 
             - name: Run the script
-              run: |
-                  python vu.py
+              run: python vu.py
