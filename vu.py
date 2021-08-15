@@ -3,7 +3,8 @@ from time import sleep
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 import requests
-import datetime, pytz
+import datetime
+import pytz
 import json
 import re
 
@@ -11,11 +12,16 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def fixAndReturnDates(start, end):
-    start = datetime.datetime.strptime("-".join(start.split(",")[::-1]), "%d-%m-%Y").strftime("%d-%m-%Y")
-    end = (
-        datetime.datetime.strptime("-".join(end.split(",")[::-1]), "%d-%m-%Y") - datetime.timedelta(days=1)
+    start = datetime.datetime.strptime(
+        "-".join(start.split(",")[::-1]), "%d-%m-%Y"
     ).strftime("%d-%m-%Y")
-    dateToday = datetime.datetime.now(pytz.timezone("Asia/Karachi")).strftime("%d-%m-%Y")
+    end = (
+        datetime.datetime.strptime("-".join(end.split(",")[::-1]), "%d-%m-%Y")
+        - datetime.timedelta(days=1)
+    ).strftime("%d-%m-%Y")
+    dateToday = datetime.datetime.now(pytz.timezone("Asia/Karachi")).strftime(
+        "%d-%m-%Y"
+    )
 
     # print(start, end, dateToday)
     return (start, end, dateToday)
@@ -45,7 +51,9 @@ def loginIntoWebApplication(studentId, password):
     if getLoginParameters.status_code == 200:
         soup = BeautifulSoup(getLoginParameters.text, "html.parser")
         viewstate = soup.find_all("input", {"id": "__VIEWSTATE"})[0]["value"]
-        eventvalid = soup.find_all("input", {"id": "__EVENTVALIDATION"})[0]["value"]
+        eventvalid = soup.find_all("input", {"id": "__EVENTVALIDATION"})[0][
+            "value"
+        ]
 
         # Login form won't work without these params
 
@@ -78,9 +86,14 @@ def loginIntoWebApplication(studentId, password):
                 print(f"\n[#] User ({cookies['stdUserName']}) logged in!")
 
                 # Need to give /Home.aspx a hit with some token without that, the cookies don't work lol! (found after hella debuggin)
-                locationHref = re.findall(r"window\.top\.location\.href=\'Home\.aspx\?id\=(.*?)\'\;", login.text)[0]
+                locationHref = re.findall(
+                    r"window\.top\.location\.href=\'Home\.aspx\?id\=(.*?)\'\;",
+                    login.text,
+                )[0]
 
-                homePath = f"https://vulms.vu.edu.pk/Home.aspx?id={locationHref}"
+                homePath = (
+                    f"https://vulms.vu.edu.pk/Home.aspx?id={locationHref}"
+                )
                 homeRequest = session.get(
                     homePath,
                     # proxies = {
@@ -94,15 +107,23 @@ def loginIntoWebApplication(studentId, password):
 
         else:
             returnRequestDetailsOnFailure(
-                url=loginURL, customString="There was an error trying to fetch params", requestObj=getLoginParameters
+                url=loginURL,
+                customString="There was an error trying to fetch params",
+                requestObj=getLoginParameters,
             )
 
     else:
-        returnRequestDetailsOnFailure(url=loginURL, customString="There was an error trying to login", requestObj=login)
+        returnRequestDetailsOnFailure(
+            url=loginURL,
+            customString="There was an error trying to login",
+            requestObj=login,
+        )
 
 
 def fetchCalendarAndDetails(session):
-    calendarURL = "https://vulms.vu.edu.pk/ActivityCalendar/ActivityCalendar.aspx"
+    calendarURL = (
+        "https://vulms.vu.edu.pk/ActivityCalendar/ActivityCalendar.aspx"
+    )
 
     try:
         request = session.get(
@@ -133,9 +154,9 @@ def fetchCalendarAndDetails(session):
                 startDate, endDate, dateToday = fixAndReturnDates(start, end)
                 # print(title, startDate, endDate, dateToday, subtDate)
 
-                subtDate = datetime.datetime.strptime(endDate, "%d-%m-%Y") - datetime.datetime.strptime(
-                    dateToday, "%d-%m-%Y"
-                )
+                subtDate = datetime.datetime.strptime(
+                    endDate, "%d-%m-%Y"
+                ) - datetime.datetime.strptime(dateToday, "%d-%m-%Y")
                 subtDate = str(subtDate).split(" ")[0]
 
                 if "0:00:00" in subtDate:
@@ -159,10 +180,14 @@ def fetchCalendarAndDetails(session):
 
                 if subtDate > 0:
                     if subtDate == 1:
-                        post += f"[#] **{title}** (_**{subtDate}** day left_)\n"
+                        post += (
+                            f"[#] **{title}** (_**{subtDate}** day left_)\n"
+                        )
 
                     else:
-                        post += f"[#] **{title}** (_**{subtDate}** days left_)\n"
+                        post += (
+                            f"[#] **{title}** (_**{subtDate}** days left_)\n"
+                        )
 
                     post += f"Start date: {startDate}\n"
                     post += f"End date: {endDate}\n\n"
@@ -172,7 +197,9 @@ def fetchCalendarAndDetails(session):
 
         else:
             returnRequestDetailsOnFailure(
-                url=calendarURL, customString="There was an error trying to fetch calendar", requestObj=request
+                url=calendarURL,
+                customString="There was an error trying to fetch calendar",
+                requestObj=request,
             )
 
     except AttributeError:
@@ -187,7 +214,9 @@ def postIntoDiscord(post, webHookURL):
 
     else:
         returnRequestDetailsOnFailure(
-            url=webHookURL[:31], customString="There was an error trying to post on webhook", requestObj=discordPost
+            url=webHookURL[:31],
+            customString="There was an error trying to post on webhook",
+            requestObj=discordPost,
         )
 
 
