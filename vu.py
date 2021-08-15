@@ -8,7 +8,6 @@ import requests
 import datetime, pytz
 import json
 import re
-import os
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -264,9 +263,12 @@ def postIntoDiscord(post, webHookURL):
 
 
 def main():
-    studentId = os.environ.get("USERNAME")
-    password = os.environ.get("PASSWORD")
-    webHookURL = os.environ.get("WEBHOOK_URL")
+    with open("config.json", "r") as f:
+        configContents = json.loads(f.read().strip())
+
+    studentId = configContents["studentId"]
+    password = configContents["password"]
+    webHookURL = configContents["discordWebHookURL"]
 
     print("[&] Logging into the Web application...\n")
 
