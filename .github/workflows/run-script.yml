@@ -33,10 +33,9 @@ jobs:
             - name: Run pylint on the source code (and return 0 even if there are issues)
               run: pylint vu.py --exit-zero
 
-            - name: Setup config.json file from secrets
-              run: echo $CREDS_FILE | base64 -d > config.json
-              env:
-                  CREDS_FILE: ${{secrets.CREDS_FILE}}
-
-            - name: Run the script
+            - name: Import credentials as environmental variables and run the script
               run: python vu.py
+              env:
+                  USERNAME: ${{secrets.USERNAME}}
+                  PASSWORD: ${{secrets.PASSWORD}}
+                  WEBHOOK_URL: ${{secrets.WEBHOOK_URL}}
