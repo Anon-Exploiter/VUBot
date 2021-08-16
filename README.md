@@ -1,31 +1,38 @@
 # VUBot
+
 A script to post `Quizzes`, `GDBs`, and `Assignments` in Discord channel via WebHooks to alert the assignee. 
 
 ### Features
+
 - Fetching Student's assigned `GDBs`, `Quizzes` and `Assignments`
 - From (v1.2), we get any **pending challans'** as well! 😄
 - Posting all that stuff in a `Discord channel`
 
 ### How it works?
+
 The script utilizies `Web Applications` source from VULMS. First it authenticates the user with his `studentId` and `studentPassword` and then creates and maintains a `session`. Utilizing that `session`, it accesses the **ActivityCalendar.aspx** file and gets the `JSON` containing the all data related to assigned stuff.
 
 ### How to use?
-Add `user's credentials` and `WebHook URL` of the Discord channel in the [config.json](https://github.com/Anon-Exploiter/VUBot/blob/main/config.json) file (it already has test data in it -- just populate it)
 
-<img src="https://i.imgur.com/E2a6DuM.png">
+Add the following `environmental variables` according to your credentials and then execute the `script`.
 
-After doing so, upload the script on **Heroku**, `requirements`, `Procfile`, and `runtime.txt` has already been added. You can either run the script on some other `EC2 instance` (which constantly runs) or on Heroku and configure Dyno to constantly run (recommended and free way). 
+```bash
+export USERNAME=bcXXXXXXXX
+export PASSWORD=XXXXXXXXXXX
+export WEBHOOK_URL=https://discord.com/api/webhooks/XXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
+```
+
+```bash
+python3 vu.py
+```
 
 ### Output
 
 <img src="https://i.imgur.com/9TVTlgn.png">
 
-<img src="https://i.imgur.com/R6nl3G1.png">
-
-### Todos
-- Update screenshots of the README.md file
 
 ### Changelog
+
 | Changes                                                                                                   | Release                                             
 | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------- 
 |Jumped directly from mobile application's API endpoints to Web (easy life) |1.2 - 21-05-2021|
