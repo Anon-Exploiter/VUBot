@@ -26,17 +26,15 @@ export WEBHOOK_URL=https://discord.com/api/webhooks/XXXXXXXXXXX/XXXXXXXXXXXXXXXX
 python3 vu.py
 ```
 
+Alternatively, you can hard-code the **credentials** in the `creds.sh` file, `source` it, and execute the script. 
+
+```bash
+source creds.sh
+python3 vu.py
+```
+
 ### Output
 
 <img src="https://i.imgur.com/9TVTlgn.png">
 
-
-### Changelog
-
-| Changes                                                                                                   | Release                                             
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------- 
-|Jumped directly from mobile application's API endpoints to Web (easy life) |1.2 - 21-05-2021|
-| [Major bug fix] Fixes time issue while execution in Heroku server | 0.3 - 13-02-2021
-| Implements [#1](https://github.com/Anon-Exploiter/VUBot/issues/1), [#2](https://github.com/Anon-Exploiter/VUBot/issues/2), and [#3](https://github.com/Anon-Exploiter/VUBot/issues/3) -- Minor enhancements                                                           | 0.2 - 11-02-2021                                    
-| Initial release containing VU Bot which lets one get discord post of Quizzes and Assignments              | 0.1 - 09-02-2021                                    
-
+<img src="https://i.imgur.com/GErG3xz.png">
