@@ -182,9 +182,7 @@ def fetchCalendarAndDetails(session):
             print()
 
             for subjects in calendarJSON:
-                coursecode = subjects["coursecode"]
                 title = subjects["title"]
-                url = subjects["url"]
                 start = subjects["start"]
                 end = subjects["end"]
 
