@@ -207,11 +207,19 @@ def fetchCalendarAndDetails(session):
 
                 if subtDate == -1:
                     if startDate != endDate:
-                        post += f"[#] **{title}**\n"
-                        post += f"Start date: {startDate}\n"
+                        if "Result" in title:
+                            post += f"[#] **{title}**\n"
+                            post += f"Start date: {startDate}\n\n"
 
-                        if startDate < endDate:
-                            post += f"End date: {endDate}\n\n"
+                            if startDate < endDate:
+                                post += f"End date: {endDate}\n\n"
+
+                        else:
+                            post += f"[#] **{title}**\n"
+                            post += f"Start date: {startDate}\n"
+
+                            if startDate < endDate:
+                                post += f"End date: {endDate}\n\n"
 
                 if subtDate > 0:
                     if subtDate == 1:
