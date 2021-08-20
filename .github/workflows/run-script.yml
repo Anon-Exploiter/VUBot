@@ -36,6 +36,6 @@ jobs:
             - name: Import credentials as environmental variables and run the script
               run: python vu.py
               env:
-                  USERNAME: ${{secrets.USERNAME}}
-                  PASSWORD: ${{secrets.PASSWORD}}
+                  USERNAME: ${{secrets.VUSERNAME}}
+                  PASSWORD: ${{secrets.VPASSWORD}}
                   WEBHOOK_URL: ${{secrets.WEBHOOK_URL}}
