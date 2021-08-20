@@ -270,10 +270,9 @@ def postIntoDiscord(post, webHookURL):
 
 
 def main():
-    if os.getenv("VUSERNAME"):
-        studentId = os.getenv("VUSERNAME")
-        password = os.getenv("VPASSWORD")
-        webHookURL = os.getenv("WEBHOOK_URL")
+    studentId = os.getenv("VUSERNAME")
+    password = os.getenv("VPASSWORD")
+    webHookURL = os.getenv("WEBHOOK_URL")
 
     print("[&] Logging into the Web application...\n")
 
