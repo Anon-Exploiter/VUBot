@@ -1,0 +1,3 @@
+export VUSERNAME=bcxxxxxxx
+export VPASSWORD=xxxxxxxxx
+export WEBHOOK_URL=https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
