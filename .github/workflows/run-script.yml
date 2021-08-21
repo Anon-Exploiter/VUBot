@@ -1,10 +1,10 @@
-name: Run every hour and post assigned tasks in Discord
+name: Run every 3 hours and post assigned tasks in Discord
 
 on:
     push:
         branches: [main]
     schedule:
-        - cron: "0 * * * *"
+        - cron: "* */3 * * *"
 
 jobs:
     post:
