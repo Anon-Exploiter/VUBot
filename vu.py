@@ -182,9 +182,13 @@ def fetchCalendarAndDetails(session):
             print()
 
             for subjects in calendarJSON:
-                title = subjects["title"]
-                start = subjects["start"]
-                end = subjects["end"]
+                title = subjects.get("title")
+
+                if not title:
+                    title = subjects.get("Title")
+
+                start = subjects.get("start")
+                end = subjects.get("end")
 
                 startDate, endDate, dateToday = fixAndReturnDates(start, end)
                 # print(title, startDate, endDate, dateToday, subtDate)
