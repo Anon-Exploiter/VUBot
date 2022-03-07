@@ -5,7 +5,8 @@ from time import sleep
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 import requests
-import datetime, pytz
+import datetime
+import pytz
 import json
 import re
 import os
