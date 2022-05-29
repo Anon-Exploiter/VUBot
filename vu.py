@@ -227,7 +227,7 @@ def fetchCalendarAndDetails(session):
                 if not title:
                     title = subjects.get("Title")
 
-                start = subjects.get("start")
+                start = subjects.get("Start")
                 end = subjects.get("end")
 
                 startDate, endDate, dateToday = fixAndReturnDates(start, end)
@@ -303,7 +303,6 @@ def postIntoDiscord(post, webHookURL):
         post ([str]): Summary/Data to post
         webHookURL ([str]): Webhook URL of discord channel
     """
-    print(post)
     discordPost = requests.post(webHookURL, {"content": post})
 
     if discordPost.status_code == 204:
