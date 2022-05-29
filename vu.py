@@ -303,6 +303,7 @@ def postIntoDiscord(post, webHookURL):
         post ([str]): Summary/Data to post
         webHookURL ([str]): Webhook URL of discord channel
     """
+    print(post)
     discordPost = requests.post(webHookURL, {"content": post})
 
     if discordPost.status_code == 204:
