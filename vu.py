@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 from time import sleep
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
@@ -86,6 +87,9 @@ def fetch_recaptcha_response():
 
     driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
     driver.get("https://vulms.vu.edu.pk/LMS_LP.aspx")
+
+    # To fetch the captcha response
+    sleep(5)
 
     captcha_text = driver.find_element(By.ID, "g-recaptcha-response").get_attribute('value')
     print(captcha_text)
