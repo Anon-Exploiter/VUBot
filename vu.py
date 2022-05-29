@@ -3,6 +3,11 @@
 from bs4 import BeautifulSoup
 from time import sleep
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 
 import requests
 import datetime
@@ -55,6 +60,38 @@ def returnRequestDetailsOnFailure(url, customString, requestObj):
     print(string)
 
 
+def fetch_recaptcha_response():
+    """
+    Fetches g-recaptcha-response *now* required for login
+
+    Previously it was implemented but devs weren't checking the parameter on backend but
+    it seems now they've added a strict check which can no longer be bypassed so we'll
+    just fetch it from selenium
+    """
+
+    chrome_service = Service(ChromeDriverManager().install())
+
+    chrome_options = Options()
+    options = [
+        "--headless",
+        "--disable-gpu",
+        "--window-size=1920,1200",
+        "--ignore-certificate-errors",
+        "--disable-extensions",
+        "--no-sandbox",
+        "--disable-dev-shm-usage"
+    ]
+    for option in options:
+        chrome_options.add_argument(option)
+
+    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+    driver.get("https://vulms.vu.edu.pk/LMS_LP.aspx")
+
+    captcha_text = driver.find_element(By.ID, "g-recaptcha-response").get_attribute('value')
+    print(captcha_text)
+    return(captcha_text)
+
+
 def loginIntoWebApplication(studentId, password):
     """Login into the application and return the sesion to use for
     further requests
@@ -84,6 +121,7 @@ def loginIntoWebApplication(studentId, password):
         eventvalid = soup.find_all("input", {"id": "__EVENTVALIDATION"})[0][
             "value"
         ]
+        g_recaptcha_response = fetch_recaptcha_response()
 
         # Login form won't work without these params
 
@@ -106,6 +144,7 @@ def loginIntoWebApplication(studentId, password):
                 "txtPassword": password,
                 "cbKeepMeLogin": "on",
                 "ibtnLogin": "Sign In",
+                "g-recaptcha-response": g_recaptcha_response
             },
         )
 
@@ -249,6 +288,9 @@ def fetchCalendarAndDetails(session):
                 customString="There was an error trying to fetch calendar",
                 requestObj=request,
             )
+
+    # except KeyboardInterrupt:
+    #     print("\n[!] Did you forget to add credentials in config.json?")
 
     except AttributeError:
         print("\n[!] Did you forget to add credentials in config.json?")
